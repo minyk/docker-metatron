@@ -1,0 +1,42 @@
+spring:
+  profiles: ${METATRON_ENV_MODE:local}
+# If "METATRON_DB_TYPE" property in metatron-env file is "mysql"
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/polaris?useUnicode=true&amp;characterEncoding=utf8
+#    username: polaris
+#    password: polaris
+server:
+  port: 8180
+logging:
+  config: classpath:logback-console.xml
+polaris:
+  engine:
+    hostname:
+      broker: http://druid:8082
+      overlord: http://druid:8090
+      coordinator: http://druid:8081
+    ingestion:
+      baseDir: /tmp
+      hosts:
+        "[test.com]":
+          port: 22
+          username: abc
+          password: test
+    query:
+      localResultDir: ${java.io.tmpdir:-/tmp}
+      defaultForwardUrl: local:/tmp
+      hosts:
+        localhost:
+          port: 22
+          username: abc
+          password: test
+  geoserver:
+    baseUrl: http://geoserver:9090
+    username: admin
+    password: xxxxx
+    defaultWorkspace: metatron
+# Set up Hive related information when using Data Prep.
+#  dataprep:
+#    localBaseDir: ${METATRON_HOME}/dataprep
+#    hadoopConfDir: /etc/hadoop
+#    stagingBaseDir: hdfs://hadoop-cluster/user/hive/dataprep

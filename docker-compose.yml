@@ -1,0 +1,23 @@
+version: '2'
+services:
+  druid:
+    image: minyk/metatron-druid:dev
+    build:
+      context: ./druid
+  geoserver:
+    image: minyk/metatron-geoserver:dev
+    build:
+      context: ./geoserver
+  discovery:
+    image: minyk/metatron-discovery:dev
+    build:
+      context: ./discovery
+      args:
+        - METATRON_TAG=3.1.2
+    depends_on:
+      - druid
+      - geoserver
+    volumes:
+      - ./metatron/conf:/discovery/conf
+    ports:
+      - 8180:8180
